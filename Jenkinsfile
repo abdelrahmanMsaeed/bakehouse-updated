@@ -11,7 +11,8 @@ pipeline {
               docker push abosaeed/jenkins_worker
           """
         }
-        
+        cleanWs()
+
       }
       }
     }
