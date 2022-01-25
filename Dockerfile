@@ -36,10 +36,10 @@ RUN echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/ap
 RUN apt-get update
 RUN apt-get install -y kubectl
 
-#install helm3
-# RUN curl -fsSl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 -o get_helm.sh \
-#     && chmod 700 get_helm.sh \
-#     && ./get_helm.sh
+# install helm3
+RUN curl -fsSl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 -o get_helm.sh \
+    && chmod 700 get_helm.sh \
+    && ./get_helm.sh
 
 #install NodeJs
 RUN apt update \
