@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent { label 'jenkins_ubuntu_slave_java11' }
   stages {
     stage('deploy using k8s') {
       steps {
