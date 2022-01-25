@@ -1,21 +1,21 @@
 pipeline {
-  agent any
+  agent { label 'jenkins_ubuntu_slave_java11' }
   stages {
-    stage('start') {
+    stage('deploy using k8s') {
       steps {
         script {
-        cleanWs()
-        git branch: env.BRANCH_NAME, credentialsId: 'dina-cred-github', url: scm.userRemoteConfigs[0].url
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        withCredentials([file(credentialsId: 'kubecongif', variable: 'k8s_config')]) {
           sh """
-              docker login -u ${USERNAME} -p ${PASSWORD}
-              docker build -t abosaeed/jenkins_worker .
-              docker push abosaeed/jenkins_worker
+              gcloud container clusters get-credentials my-gke-cluster --region us-central1 --project abdelrahman-saeed
+              kubectl apply -f . --kubeconfig=$k8s_config
+
           """
         }
         
       }
       }
     }
+  }
+}
   }
 }
